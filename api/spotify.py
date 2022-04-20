@@ -136,7 +136,11 @@ def makeSVG(data, background_color, border_color):
         "testRefresh": testRefresh
     }
 
-    return render_template(getTemplate(), **dataDict)
+    render_template(getTemplate(), **dataDict)
+
+
+def testPrint():
+    print('Test')
 
 
 @app.route("/", defaults={"path": ""})
@@ -148,7 +152,7 @@ def catch_all(path):
 
     resp = catch_all_impl(path, background_color, border_color)
     threading.Timer(60.0, catch_all_impl, [path, background_color, border_color]).start()
-    return resp
+    threading.Timer(5, testPrint).start()
     
 
 def catch_all_impl(path, bg_color, b_color):
