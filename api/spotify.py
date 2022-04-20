@@ -140,11 +140,11 @@ def makeSVG(data, background_color, border_color):
 @app.route("/<path:path>")
 @app.route('/with_parameters')
 def catch_all(path):
-    catch_all(path)
-    threading.Timer(60.0, catch_all, [path]).start()
+    catch_all_impl(path)
+    threading.Timer(60.0, catch_all_impl, [path]).start()
     
 
-catch_all(path):
+def catch_all_impl(path):
     background_color = request.args.get('background_color') or "181414"
     border_color = request.args.get('border_color') or "181414"
 
