@@ -130,14 +130,12 @@ def makeSVG(data, background_color, border_color):
         "status": currentStatus,
         "background_color": background_color,
         "border_color": border_color,
-        "scanCode": scanCode
+        "scanCode": scanCode,
+        "testRefresh": "Ref: " + random.random()
     }
 
     return render_template(getTemplate(), **dataDict)
 
-
-def refresh():
-    testRefresh = "Ref: " + random.random()
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
@@ -147,7 +145,6 @@ def catch_all(path):
     border_color = request.args.get('border_color') or "181414"
 
     resp = catch_all_impl(path, background_color, border_color)
-    threading.Timer(5, refresh).start()
     threading.Timer(60.0, catch_all_impl, [path, background_color, border_color]).start()
     return resp
     
