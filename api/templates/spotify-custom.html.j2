@@ -119,6 +119,10 @@
                     justify-content: center;
                 }
 
+                .song_code {
+                    justify-self: flex-end;
+                }
+
                 {{barCSS|safe}}
             </style>
 
@@ -139,7 +143,7 @@
                                 <div class="artist">{{artistName}}</div>
                             </a>
                         </div>
-                        <a href="{}" target="_blank">
+                        <a href="{}" target="_blank" class="song_code">
                             <center>
                                 <img src="data:image/png;base64, {{scanCode}}" class="songCode" />
                             </center>
