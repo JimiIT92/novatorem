@@ -87,6 +87,12 @@ def loadImageB64(url):
     return b64encode(response.content).decode("ascii")
 
 
+def codeGen(uri):
+    url = "https://scannables.scdn.co/uri/plain/png/000000/white/640/" + uri
+    return loadImageB64(url)
+
+
+
 def makeSVG(data, background_color, border_color):
     barCount = 84
     contentBar = "".join(["<div class='bar'></div>" for i in range(barCount)])
@@ -95,7 +101,7 @@ def makeSVG(data, background_color, border_color):
     if data == {} or data["item"] == "None" or data["item"] is None:
         contentBar = ""
         currentStatus = "Not vibing :("
-        item = {'name': "Currently not vibing 😢", 'artists': [{'name': "That's sad...", 'external_urls': {'spotify': "https://www.spotify.com/"}}], 'external_urls': {'spotify': "https://www.spotify.com/"}, 'album': {'images': []}}
+        item = {'name': "Currently not vibing 😢", 'artists': [{'name': "That's sad...", 'external_urls': {'spotify': "https://www.spotify.com/"}}], 'external_urls': {'spotify': "https://www.spotify.com/"}, 'album': {'images': []}, 'uri': "https://www.spotify.com/"}
     else:
         item = data["item"]
         currentStatus = "Vibing to:"
@@ -109,6 +115,7 @@ def makeSVG(data, background_color, border_color):
     songName = item["name"].replace("&", "&amp;")
     songURI = item["external_urls"]["spotify"]
     artistURI = item["artists"][0]["external_urls"]["spotify"]
+    scanCode = codeGen(item["uri"])
 
     dataDict = {
         "contentBar": contentBar,
@@ -120,7 +127,8 @@ def makeSVG(data, background_color, border_color):
         "image": image,
         "status": currentStatus,
         "background_color": background_color,
-        "border_color": border_color
+        "border_color": border_color,
+        "scanCode": scanCode
     }
 
     return render_template(getTemplate(), **dataDict)
