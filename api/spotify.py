@@ -94,7 +94,6 @@ def codeGen(uri):
     return loadImageB64(url)
 
 
-
 def makeSVG(data, background_color, border_color):
     barCount = 84
     contentBar = "".join(["<div class='bar'></div>" for i in range(barCount)])
