@@ -118,6 +118,8 @@ def makeSVG(data, background_color, border_color):
     songURI = item["external_urls"]["spotify"]
     artistURI = item["artists"][0]["external_urls"]["spotify"]
     scanCode = codeGen(item["uri"])
+    testRefresh = "Ref: " + str(random.random())
+    print(testRefresh)
 
     dataDict = {
         "contentBar": contentBar,
@@ -131,7 +133,7 @@ def makeSVG(data, background_color, border_color):
         "background_color": background_color,
         "border_color": border_color,
         "scanCode": scanCode,
-        "testRefresh": "Ref: " + str(random.random())
+        "testRefresh": testRefresh
     }
 
     return render_template(getTemplate(), **dataDict)
