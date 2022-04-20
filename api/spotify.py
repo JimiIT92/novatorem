@@ -131,7 +131,7 @@ def makeSVG(data, background_color, border_color):
         "background_color": background_color,
         "border_color": border_color,
         "scanCode": scanCode,
-        "testRefresh": "Ref: " + random.random()
+        "testRefresh": "Ref: " + str(random.random())
     }
 
     return render_template(getTemplate(), **dataDict)
