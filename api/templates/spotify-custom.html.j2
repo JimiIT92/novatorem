@@ -1,119 +1,66 @@
 <svg width="480" height="133" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <foreignObject width="480" height="133">
         <div xmlns="http://www.w3.org/1999/xhtml" class="container">
-            
-            <!-- <script>
-                window.addEventListener("load", _ => {
-                    let songName = document.querySelector('h1.song__name');
-                    let songArtists = document.querySelector('p.song__artists');
-
-                    if (isElementOverflowing(songName)) {
-                        songName.classList.add("marquee");
-                    }
-                    
-                    if (isElementOverflowing(songArtists)) {
-                        songArtists.classList.add("marquee");
-                    }
-
-                    function isElementOverflowing(element) {
-                        return element.offsetWidth < element.scrollWidth || element.offsetHeight < element.scrollHeight;
-                    }
-
-                    function wrapContentsInMarquee(element) {
-                        let marquee = document.createElement('marquee');
-                        marquee.innerText = element.innerText;
-                        element.innerHTML = '';
-                        element.appendChild(marquee);
-                    }
-                });
-            </script> -->
-
             <style>
-
                 .main {
-                    background-color: #{{background_color}}
-                    width: 512px;
-                    height: 128px;
-                    border-radius: 1em;
+                    /*margin-top: 40px;*/
                     display: flex;
-                    flex-direction: row;
-                    margin: 0;
-                    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
                 }
 
-                .picture,
-                .picture > * {
-                    max-width: 104px:
+                .currentStatus {
+                    float: left;
+                    font-size: 24px;
+                    position: static;
+                    margin-top: -5px;
+                    margin-left: 10px;
+                }
+                
+                .container {
+                    border-radius: 5px;
+                    padding: 10px 10px 10px 0px;
+                    background-color: #{{background_color}};
+                    border: 1px solid #{{border_color}};
                 }
 
-                .picture, .info {
-                    display: flex;
-                    padding: 1em;
-                    color: white;
+                .art {
+                    width: 27%;
+                    float: left;
+                    margin-left: -5px;
                 }
 
-                .picture img {
-                    border-radius: .5em;
-                }
-        
-                .info {
-                    flex-direction: column;
+                .content {
+                    width: 71%;
                 }
 
                 .song {
-                    display: flex;
-                    flex-direction: row;
-                    padding-block: .5em;
-                    justify-content: space-between;
-                    gap: 1em;
-                    align-items: center;
-                }
-
-                .song__info {
-                    display: flex;
-                    overflow: hidden;
-                    flex-direction: column;
-                    max-width: 35ch;
-                    gap: 1em;
-                }
-
-                .song__code,
-                .song__code > * {
-                    max-width: 50%;
-                }
-
-                .song__code > img {
-                    display: block;
-                    max-width: 100%;
-                }
-
-                .song__name {
+                    width: 330px;
                     color: #f7f7f7;
-                }
-
-                .song__artists {
-                    color: #9f9f9f;
-                }
-
-                .song__name, .song__artists {
+                    overflow: hidden;
+                    margin-top: 3px;
+                    font-size: 24px;
+                    text-align: center;
                     white-space: nowrap;
-                    display: inline-block;
-                    margin: 0;
+                    text-overflow: ellipsis;
                 }
 
-                .marquee {
-                    display: inline-block;
-                    animation: marquee 60s linear infinite;
+                .artist {
+                    width: 330px;
+                    color: #9f9f9f;
+                    font-size: 20px;
+                    margin-top: 4px;
+                    text-align: center;
+                    margin-bottom: 5px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
 
-                @keyframes marquee {
-                    0% { transform: translate(0, 0); }
-                    30% { transform: translate(-90%, 0); }
-                    40% { transform: translate(-90%, 0); }
-                    70% { transform: translate(0, 0); }
-                    100% { transform: translate(0, 0); }
+                .cover {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 5px;
                 }
-            
+
                 #bars {
                     width: 40px;
                     height: 30px;
@@ -130,26 +77,53 @@
                     background: #1DB954cc;
                     animation: sound 0ms -800ms linear infinite alternate;
                 }
+                
+                .spotify-logo {
+                    position: fixed;
+                    right: 20px;
+                    top: 10px;
+                    width: 25px;
+                    filter: invert(1);
+                }
+
+                a {
+                    text-decoration: none;
+                }
+
+                div {
+                    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+                }
+                
+                @keyframes sound {
+                    0% {
+                        height: 3px;
+                        opacity: .35;
+                    }
+
+                    100% {
+                        height: 15px;
+                        opacity: 0.95;
+                    }
+                }
 
                 {{barCSS|safe}}
-
             </style>
-        
+
             <div class="main">
-                <div class="picture">
-                    <img src="data:image/png;base64, {{image}}" alt="" />
-                </div>
-                <div class="info">
-                    <div class="song">
-                        <div class="song__info">
-                            <h1 class="song__name">{{songName}}</h1>
-                            <p class="song__artists">{{artistName}}</p>
-                        </div>
-                        <div class="song__code">
-                            <img src="data:image/png;base64, {{scanCode}}" alt="" />
-                        </div>
-                    </div>
-                    <div id="bars">{{contentBar|safe}}</div>
+                <a class="art" href="{}" target="_blank">
+                    <center>
+                        <img src="data:image/png;base64, {{image}}" class="cover" />
+                    </center>
+                </a>
+
+                <div class="content">
+                    <a href="{{songURI}}" target="_blank">
+                        <div class="song">{{songName}}</div>
+                    </a>
+                    <a href="{{artistURI}}" target="_blank">
+                        <div class="artist">{{artistName}}</div>
+                    </a>
+                    <div id="bars">{{contentBar|safe}}</div> 
                 </div>
             </div>
 
