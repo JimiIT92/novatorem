@@ -21,9 +21,6 @@ FALLBACK_THEME = "spotify.html.j2"
 
 REFRESH_TOKEN_URL = "https://accounts.spotify.com/api/token"
 NOW_PLAYING_URL = "https://api.spotify.com/v1/me/player/currently-playing"
-RECENTLY_PLAYING_URL = (
-    "https://api.spotify.com/v1/me/player/recently-played?limit=10"
-)
 
 app = Flask(__name__)
 
@@ -49,16 +46,6 @@ def refreshToken():
         print(json.dumps(response.json()))
         print("\n---\n")
         raise KeyError(str(response.json()))
-
-
-def recentlyPlayed():
-    token = refreshToken()
-    headers = {"Authorization": f"Bearer {token}"}
-    response = requests.get(RECENTLY_PLAYING_URL, headers=headers)
-
-    if response.status_code == 204:
-        return {}
-    return response.json()
 
 
 def nowPlaying():
@@ -106,12 +93,9 @@ def makeSVG(data, background_color, border_color):
     barCSS = barGen(barCount)
 
     if data == {} or data["item"] == "None" or data["item"] is None:
-        # contentBar = "" #Shows/Hides the EQ bar if no song is currently playing
-        currentStatus = "Was playing:"
-        recentPlays = recentlyPlayed()
-        recentPlaysLength = len(recentPlays["items"])
-        itemIndex = random.randint(0, recentPlaysLength - 1)
-        item = recentPlays["items"][itemIndex]["track"]
+        contentBar = ""
+        currentStatus = "Not vibing :("
+        item = {name: "Currently not vibing 😢", artists: [{name: "That's sad...", external_urls: {spotify: "https://www.spotify.com/"}}], external_urls: {spotify: "https://www.spotify.com/"}}}
     else:
         item = data["item"]
         currentStatus = "Vibing to:"
