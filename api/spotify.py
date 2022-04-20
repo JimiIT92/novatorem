@@ -95,7 +95,7 @@ def makeSVG(data, background_color, border_color):
     if data == {} or data["item"] == "None" or data["item"] is None:
         contentBar = ""
         currentStatus = "Not vibing :("
-        item = {'name': "Currently not vibing 😢", 'artists': [{'name': "That's sad...", 'external_urls': {'spotify': "https://www.spotify.com/"}}], 'external_urls': {'spotify': "https://www.spotify.com/"}}
+        item = {'name': "Currently not vibing 😢", 'artists': [{'name': "That's sad...", 'external_urls': {'spotify': "https://www.spotify.com/"}}], 'external_urls': {'spotify': "https://www.spotify.com/"}, 'album': {'images': []}}
     else:
         item = data["item"]
         currentStatus = "Vibing to:"
