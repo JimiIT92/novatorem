@@ -143,14 +143,14 @@ def catch_all(path):
     background_color = request.args.get('background_color') or "181414"
     border_color = request.args.get('border_color') or "181414"
 
-    catch_all_impl(path)
-    threading.Timer(60.0, catch_all_impl, [path]).start()
+    catch_all_impl(path, background_color, border_color)
+    threading.Timer(60.0, catch_all_impl, [path, background_color, border_color]).start()
     
 
 def catch_all_impl(path, bg_color, b_color):
 
     data = nowPlaying()
-    svg = makeSVG(data, bg_color, border_color)
+    svg = makeSVG(data, bg_color, b_color)
 
     resp = Response(svg, mimetype="image/svg+xml")
     resp.headers["Cache-Control"] = "s-maxage=1"
