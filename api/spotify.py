@@ -143,8 +143,9 @@ def catch_all(path):
     background_color = request.args.get('background_color') or "181414"
     border_color = request.args.get('border_color') or "181414"
 
-    catch_all_impl(path, background_color, border_color)
+    resp = catch_all_impl(path, background_color, border_color)
     threading.Timer(60.0, catch_all_impl, [path, background_color, border_color]).start()
+    return resp
     
 
 def catch_all_impl(path, bg_color, b_color):
