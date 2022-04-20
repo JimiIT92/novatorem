@@ -2,12 +2,10 @@ import os
 import json
 import random
 import requests
-import threading
 
 from base64 import b64encode
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, Response, jsonify, render_template, templating, request
-from turbo_flask import Turbo
 
 load_dotenv(find_dotenv())
 
@@ -24,11 +22,7 @@ FALLBACK_THEME = "spotify.html.j2"
 REFRESH_TOKEN_URL = "https://accounts.spotify.com/api/token"
 NOW_PLAYING_URL = "https://api.spotify.com/v1/me/player/currently-playing"
 
-BACKGROUND_COLOR = "181414"
-BORDER_COLOR = "181414"
-
 app = Flask(__name__)
-turbo = Turbo(app)
 
 
 def getAuth():
@@ -100,6 +94,7 @@ def codeGen(uri):
     return loadImageB64(url)
 
 
+
 def makeSVG(data, background_color, border_color):
     barCount = 84
     contentBar = "".join(["<div class='bar'></div>" for i in range(barCount)])
@@ -124,8 +119,6 @@ def makeSVG(data, background_color, border_color):
     artistURI = item["artists"][0]["external_urls"]["spotify"]
     scanCode = codeGen(item["uri"])
 
-    print("SVG")
-
     dataDict = {
         "contentBar": contentBar,
         "barCSS": barCSS,
@@ -147,29 +140,17 @@ def makeSVG(data, background_color, border_color):
 @app.route("/<path:path>")
 @app.route('/with_parameters')
 def catch_all(path):
-    BACKGROUND_COLOR = request.args.get('background_color') or "181414"
-    BORDER_COLOR = request.args.get('border_color') or "181414"
+    background_color = request.args.get('background_color') or "181414"
+    border_color = request.args.get('border_color') or "181414"
 
     data = nowPlaying()
-    svg = makeSVG(data, BACKGROUND_COLOR, BORDER_COLOR)
+    svg = makeSVG(data, background_color, border_color)
 
     resp = Response(svg, mimetype="image/svg+xml")
     resp.headers["Cache-Control"] = "s-maxage=1"
 
     return resp
 
-
-@app.before_first_request
-def before_first_request():
-    threading.Thread(target=update_load).start()
-
-
-def update_load():
-    with app.app_context():
-        while True:
-            time.sleep(60)
-            data = nowPlaying()
-            turbo.push(turbo.replace(makeSVG(data, BACKGROUND_COLOR, BORDER_COLOR), 'load'))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True, port=os.getenv("PORT") or 5000)
