@@ -105,8 +105,6 @@ def makeSVG(data, background_color, border_color):
     else:
         image = loadImageB64(item["album"]["images"][1]["url"])
 
-    print(item)
-
     artistName = item["artists"][0]["name"].replace("&", "&amp;")
     songName = item["name"].replace("&", "&amp;")
     songURI = item["external_urls"]["spotify"]
